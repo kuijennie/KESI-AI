@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(py -3 -m pip install fastapi uvicorn[standard] spacy 2>&1)",
+      "PowerShell(py -3 -m spacy download en_core_web_sm 2>&1)",
+      "PowerShell(Invoke-RestMethod -Uri \"http://localhost:8000/health\" -Method Get)",
+      "PowerShell(Invoke-RestMethod -Uri \"http://localhost:8000/health\" -Method Get 2>&1)",
+      "PowerShell(try { $r = Invoke-WebRequest -Uri \"http://localhost:8000/health\" -UseBasicParsing; $r.StatusCode } catch { $_.Exception.Message })",
+      "PowerShell($body = '{\"text\":\"test ruling\"}'; $r = Invoke-WebRequest -Uri \"http://localhost:8000/generate-brief\" -Method POST -Body $body -ContentType \"application/json\" -UseBasicParsing; $r.StatusCode; $r.Headers[\"Access-Control-Allow-Origin\"])",
+      "PowerShell($r = Invoke-WebRequest -Uri \"http://localhost:8000/generate-brief\" -Method OPTIONS -Headers @{\"Origin\"=\"http://localhost:5177\"; \"Access-Control-Request-Method\"=\"POST\"; \"Access-Control-Request-Headers\"=\"content-type\"} -UseBasicParsing; $r.StatusCode; $r.Headers | Format-List)"
+    ]
+  }
+}
